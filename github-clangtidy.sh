@@ -5,7 +5,7 @@ set -e
 # DROPBOX_TOKEN is an access token for the Dropbox API
 
 CLANGTIDY=run-clang-tidy-9
-BRANCH=${BRANCH:=master}
+BRANCH=${BRANCH:="origin/master"}
 
 if [ "$GITHUB_ACTIONS" = "true" ]; then
   REPO_NAME=$(basename "$GITHUB_REPOSITORY")
@@ -22,7 +22,7 @@ status () {
       DATA="{ \"state\": \"$1\", \"description\": \"$DESCRIPTION\", \"context\": \"github / clangtidy\"}"
       PULL_REQUEST_STATUS=$(curl -s -H "Content-Type: application/json" -H "Authorization: token $GITHUB_TOKEN" -H "User-Agent: $REPO_FULL_NAME" -X GET "https://api.github.com/repos/$REPO_FULL_NAME/pulls/$PULL_REQUEST")
       STATUSES_URL=$(echo "$PULL_REQUEST_STATUS" | jq -r '.statuses_url')
-      curl -H "Content-Type: application/json" -H "Authorization: token $GITHUB_TOKEN" -H "User-Agent: $REPO_FULL_NAME" -X POST -d "$DATA" "$STATUSES_URL" 1>/dev/null
+      curl -H "Content-Type: application/json" -H "Authorization: token $GITHUB_TOKEN" -H "User-Agent: $REPO_FULL_NAME" -X POST -d "$DATA" "$STATUSES_URL" 1>/dev/null 2>&1
     fi
 
     if [ "$ANALYSE_ALL" = true ] && [ "$1" != "pending" ]; then
