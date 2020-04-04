@@ -53,7 +53,7 @@ unset "ARGS[${#ARGS[@]}-1]"
 
 ANALYSE_ALL=false
 if [ "$FILES" = "diff" ]; then
-  FILES=$(git diff --name-only --diff-filter ACMRTUXB $BRANCH | grep -e '\.c$' -e '\.cc$' -e '\cpp$' -e '\.cxx$' | xargs)
+  FILES=$(git diff --name-only --diff-filter ACMRTUXB "$BRANCH" | grep -e '\.c$' -e '\.cc$' -e '\cpp$' -e '\.cxx$' | xargs)
 elif [ "$FILES" = "." ]; then
   FILES=""
   ANALYSE_ALL=true
@@ -66,7 +66,8 @@ WARNINGS=0
 
 if [ "$FILES" != "" ] || [ "$ANALYSE_ALL" = true ]; then
   LOG=/tmp/clangtidy.log
-  python3 /usr/bin/"$CLANGTIDY" "${ARGS[*]}" $FILES 2>&1 | tee $LOG
+  COMMAND="python3 /usr/bin/$CLANGTIDY ${ARGS[*]} $FILES 2>&1 | tee $LOG"
+  $COMMAND
 
   ERRORS=$(grep -c "error:" $LOG)
   WARNINGS=$(grep "warning:" $LOG)
