@@ -70,7 +70,7 @@ if [ "$FILES" != "" ] || [ "$ANALYSE_ALL" = true ]; then
   $COMMAND
 
   ERRORS=$(grep -c "error:" $LOG)
-  WARNINGS=$(grep "warning:" $LOG)
+  WARNINGS=$(grep -c "warning:" $LOG)
 fi
 
 BUGS=$((ERRORS + WARNINGS ))
