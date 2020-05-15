@@ -66,8 +66,8 @@ WARNINGS=0
 
 if [ "$FILES" != "" ] || [ "$ANALYSE_ALL" = true ]; then
   LOG=/tmp/clangtidy.log
-  COMMAND="python3 /usr/bin/$CLANGTIDY ${ARGS[*]} $FILES 2>&1 | tee $LOG"
-  $COMMAND
+  COMMAND="python3 /usr/bin/$CLANGTIDY ${ARGS[*]} $FILES"
+  $COMMAND 2>&1 | tee "$LOG"
 
   ERRORS=$(grep -c "error:" $LOG)
   WARNINGS=$(grep -c "warning:" $LOG)
