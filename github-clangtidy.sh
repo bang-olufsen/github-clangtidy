@@ -4,7 +4,7 @@ set -e
 # GITHUB_TOKEN is a GitHub private access token configured for repo:status scope
 # DROPBOX_TOKEN is an access token for the Dropbox API
 
-CLANGTIDY=run-clang-tidy-9
+CLANGTIDY=${CLANGTIDY:="run-clang-tidy-10"}
 BRANCH=${BRANCH:="origin/master"}
 
 if [ "$GITHUB_ACTIONS" = "true" ]; then
